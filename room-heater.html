@@ -6,7 +6,7 @@
     <title>Handy Room Heater — 800W Turbo | Prodhan.com</title>
     <meta
       name="description"
-      content="শীতের দিনে উষ্ণতা ও আরামের স্মার্ট সমাধান — Handy Room Heater 800W Turbo। রোটেটেবল প্লাগ, টাচ ও রিমোট কন্ট্রোল। বিশেষ মূল্য ৳1,690।"
+      content="শীতের দিনে উষ্ণতা ও আরামের স্মার্ট সমাধান — Handy Room Heater 800W Turbo। রোটেটেবল প্লাগ, টাচ ও রিমোট কন্ট্রোল। বিশেষ মূল্য ৳১,৬৯০।"
     />
     <meta name="theme-color" content="#E85D25" />
     <style>
@@ -61,17 +61,17 @@
         color: var(--text);
         background: var(--bg);
         overflow-x: hidden;
-        opacity: 0;
-        animation: pageIn 0.7s var(--ease) 0.05s forwards;
+        /* Fade only (no transform, no fill-forwards): a transformed/animated <body>
+           becomes the containing block for position:fixed, which pushed the mobile
+           sticky CTA to the bottom of the page instead of the screen. */
+        animation: pageIn 0.7s var(--ease) 0.05s backwards;
       }
       @keyframes pageIn {
         from {
           opacity: 0;
-          transform: translateY(10px);
         }
         to {
           opacity: 1;
-          transform: none;
         }
       }
 
@@ -220,6 +220,10 @@
       }
       .btn-pulse {
         animation: pulse 2.4s ease-in-out infinite;
+      }
+      .btn .cart-icon {
+        flex: none;
+        margin-inline-end: -5px;
       }
       @keyframes pulse {
         0%,
@@ -802,75 +806,188 @@
         font-weight: 700;
       }
 
-      /* ---------- Offer ---------- */
-      .offer-card {
+      /* ---------- Offer (redesigned, brand orange) ---------- */
+      .ofr {
         position: relative;
         overflow: hidden;
-        text-align: center;
+        isolation: isolate;
         color: #fff;
-        background: var(--grad);
-        border-radius: 32px;
-        padding: clamp(32px, 6vw, 64px) 20px;
-        box-shadow: var(--shadow-lg);
+        border-radius: 36px;
+        padding: clamp(28px, 5vw, 64px);
+        background:
+          radial-gradient(
+            circle at 12% 8%,
+            rgba(255, 255, 255, 0.22),
+            transparent 42%
+          ),
+          radial-gradient(
+            circle at 95% 100%,
+            rgba(255, 255, 255, 0.18),
+            transparent 40%
+          ),
+          var(--grad);
+        box-shadow: 0 28px 70px rgba(232, 93, 37, 0.35);
       }
-      .offer-card h2 {
-        font-size: clamp(1.4rem, 3.6vw, 2.1rem);
-        margin: 14px 0 26px;
-      }
-      .offer-glow {
+      /* dotted texture */
+      .ofr::before {
+        content: "";
         position: absolute;
-        inset: -40% auto auto -10%;
-        width: 60%;
+        inset: 0;
+        z-index: -1;
+        background-image: radial-gradient(
+          rgba(255, 255, 255, 0.22) 1.5px,
+          transparent 1.5px
+        );
+        background-size: 22px 22px;
+        -webkit-mask-image: linear-gradient(120deg, #000 0%, transparent 55%);
+        mask-image: linear-gradient(120deg, #000 0%, transparent 55%);
+      }
+      /* soft pulsing heat rings */
+      .ofr-ring {
+        position: absolute;
+        right: -90px;
+        bottom: -90px;
+        width: 340px;
         aspect-ratio: 1;
         border-radius: 50%;
-        background: radial-gradient(
-          circle,
-          rgba(255, 255, 255, 0.35),
-          transparent 65%
-        );
-        animation: floatY 7s ease-in-out infinite;
+        border: 2px solid rgba(255, 255, 255, 0.35);
+        z-index: -1;
+        animation: ofrRing 5s ease-out infinite;
       }
-      .offer-prices {
-        position: relative;
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        align-items: stretch;
-        gap: 16px;
-        margin-bottom: 30px;
+      .ofr-ring.r2 {
+        animation-delay: -2.5s;
       }
-      .op {
-        background: rgba(255, 255, 255, 0.16);
-        border: 1px solid rgba(255, 255, 255, 0.3);
-        border-radius: 18px;
-        padding: 14px 26px;
-        min-width: 150px;
+      @keyframes ofrRing {
+        0% {
+          transform: scale(0.55);
+          opacity: 0.9;
+        }
+        100% {
+          transform: scale(1.5);
+          opacity: 0;
+        }
+      }
+
+      .ofr-grid {
         display: grid;
-        gap: 2px;
+        grid-template-columns: 1.05fr 0.95fr;
+        gap: clamp(28px, 5vw, 60px);
+        align-items: center;
       }
-      .op small {
-        opacity: 0.9;
-        font-size: 0.9rem;
-      }
-      .op s {
-        font-size: 1.5rem;
-        opacity: 0.85;
-      }
-      .op em {
-        font-style: normal;
-        font-size: 1.5rem;
+      .ofr-title {
+        font-size: clamp(1.7rem, 4.4vw, 2.7rem);
+        line-height: 1.3;
         font-weight: 700;
+        margin: 16px 0 12px;
       }
-      .op.main {
+      .ofr-title .hl {
+        display: inline-block;
+        color: var(--primary);
+        background: #fff;
+        padding: 0 16px;
+        border-radius: 14px;
+        transform: rotate(-1.5deg);
+        box-shadow: 0 10px 24px rgba(120, 40, 10, 0.25);
+      }
+      .ofr-sub {
+        max-width: 46ch;
+        color: rgba(255, 255, 255, 0.92);
+      }
+      .ofr-list {
+        list-style: none;
+        display: grid;
+        gap: 12px;
+        margin-top: 24px;
+      }
+      .ofr-list li {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-weight: 500;
+      }
+      .ofr-list .tick {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        display: grid;
+        place-items: center;
         background: #fff;
         color: var(--primary);
+        box-shadow: 0 6px 14px rgba(120, 40, 10, 0.22);
+        flex: none;
       }
-      .op.main strong {
-        font-size: clamp(2rem, 6vw, 2.8rem);
-        line-height: 1.1;
+      .ofr-list .tick .i {
+        width: 16px;
+        height: 16px;
+        stroke-width: 3;
       }
-      .op.main small {
+
+      /* price ticket */
+      .ofr-ticket {
+        position: relative;
+        background: #fff;
+        color: var(--text);
+        border-radius: 28px;
+        padding: 40px 28px 28px;
+        text-align: center;
+        box-shadow: 0 30px 70px rgba(120, 40, 10, 0.35);
+        animation: floatY 6s ease-in-out infinite;
+      }
+      .ofr-ribbon {
+        position: absolute;
+        top: -17px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: var(--text);
+        color: #fff;
+        font-weight: 700;
+        font-size: 0.95rem;
+        padding: 6px 22px;
+        border-radius: 999px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+        white-space: nowrap;
+      }
+      .ofr-label {
         color: var(--muted);
+        font-weight: 500;
+        font-size: 0.95rem;
+      }
+      .ofr-old {
+        font-size: 1.35rem;
+        color: #8a8480;
+        text-decoration: line-through;
+      }
+      .ofr-price {
+        font-size: clamp(2.8rem, 8vw, 3.8rem);
+        font-weight: 700;
+        line-height: 1.1;
+        margin: 4px 0 14px;
+        background: var(--grad);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+      }
+      .ofr-save {
+        display: inline-block;
+        background: var(--soft);
+        border: 1px solid var(--line);
+        color: var(--primary);
+        font-weight: 600;
+        padding: 4px 16px;
+        border-radius: 999px;
+        font-size: 0.95rem;
+      }
+      .ofr-tear {
+        margin: 22px 0;
+        border-top: 2px dashed #f0d3bf;
+      }
+      .ofr-ticket .btn {
+        width: 100%;
+      }
+      .ofr-note {
+        margin-top: 12px;
+        color: var(--muted);
+        font-size: 0.88rem;
       }
 
       /* ---------- Order form ---------- */
@@ -1004,6 +1121,362 @@
         margin-top: 10px;
       }
 
+      /* ---------- Checkout (order) ---------- */
+      .ord-h {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 1.2rem;
+        line-height: 1.4;
+        color: var(--text);
+      }
+      .ord-h .i {
+        color: var(--primary);
+      }
+      .req {
+        color: var(--primary);
+        font-style: normal;
+      }
+      .order-form .field label {
+        color: var(--text);
+      }
+      .zone-options {
+        display: grid;
+        gap: 12px;
+      }
+      .zone-opt {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 14px 16px;
+        border: 1.5px solid var(--line);
+        border-radius: 14px;
+        background: var(--soft);
+        cursor: pointer;
+        font-weight: 600;
+        transition:
+          border-color 0.2s,
+          background 0.2s,
+          box-shadow 0.2s;
+      }
+      .zone-opt:hover {
+        border-color: #ffd2b5;
+      }
+      .zone-opt input {
+        appearance: none;
+        -webkit-appearance: none;
+        width: 22px;
+        height: 22px;
+        margin: 0;
+        flex: none;
+        border: 2px solid #c9b8aa;
+        border-radius: 50%;
+        background: #fff;
+        display: grid;
+        place-content: center;
+        padding: 0;
+      }
+      .zone-opt input::before {
+        content: "";
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: var(--primary);
+        transform: scale(0);
+        transition: transform 0.2s var(--ease);
+      }
+      .zone-opt input:checked {
+        border-color: var(--primary);
+      }
+      .zone-opt input:checked::before {
+        transform: scale(1);
+      }
+      .zone-opt:has(input:checked) {
+        border-color: var(--primary);
+        background: #fff1e6;
+        box-shadow: 0 0 0 3px rgba(232, 93, 37, 0.1);
+      }
+      .zone-opt:has(input:focus-visible) {
+        outline: 3px solid var(--secondary);
+        outline-offset: 2px;
+      }
+      .zone-ico {
+        width: 36px;
+        height: 36px;
+        border-radius: 10px;
+        background: #fff;
+        color: var(--primary);
+        display: grid;
+        place-items: center;
+        flex: none;
+        box-shadow: var(--shadow-sm);
+      }
+      .zone-name {
+        flex: 1;
+      }
+      .zone-opt strong {
+        color: var(--text);
+      }
+      .phone-group {
+        display: flex;
+        align-items: stretch;
+        border: 1.5px solid #e6d5c8;
+        border-radius: var(--radius-sm);
+        background: #fff;
+        overflow: hidden;
+        transition:
+          border-color 0.2s,
+          box-shadow 0.2s;
+      }
+      .phone-group:focus-within {
+        border-color: var(--primary);
+        box-shadow: 0 0 0 4px rgba(232, 93, 37, 0.14);
+      }
+      .field.invalid .phone-group {
+        border-color: #d22;
+      }
+      .phone-pre {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 0 14px;
+        background: var(--soft);
+        border-right: 1.5px solid #e6d5c8;
+        font-weight: 600;
+        white-space: nowrap;
+      }
+      .phone-pre .flag {
+        width: 22px;
+        height: 15px;
+        flex: none;
+      }
+      .phone-group input,
+      .phone-group input:focus {
+        border: 0;
+        border-radius: 0;
+        box-shadow: none;
+        outline: none;
+        min-width: 0;
+      }
+      .hint {
+        color: var(--muted);
+        font-size: 0.85rem;
+      }
+      .summary .ord-h {
+        margin-bottom: 14px;
+      }
+      .sum-head {
+        display: flex;
+        justify-content: space-between;
+        padding-bottom: 8px;
+        border-bottom: 1px solid var(--line);
+        color: var(--primary);
+        font-weight: 700;
+        font-size: 0.92rem;
+      }
+      .sum-item {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 14px 0;
+        border-bottom: 1px dashed var(--line);
+      }
+      .sum-thumb {
+        position: relative;
+        width: 56px;
+        height: 56px;
+        flex: none;
+      }
+      .sum-thumb img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 10px;
+        border: 1px solid var(--line);
+      }
+      .sum-thumb b {
+        position: absolute;
+        top: -8px;
+        left: -8px;
+        min-width: 22px;
+        height: 22px;
+        padding: 0 5px;
+        border-radius: 999px;
+        background: var(--primary);
+        color: #fff;
+        font-size: 0.75rem;
+        display: grid;
+        place-items: center;
+        line-height: 1;
+      }
+      .sum-info {
+        flex: 1;
+        min-width: 0;
+        display: grid;
+        line-height: 1.4;
+      }
+      .sum-info strong {
+        font-size: 0.98rem;
+      }
+      .sum-info small {
+        color: var(--muted);
+        font-size: 0.8rem;
+      }
+      .sum-line {
+        font-weight: 700;
+        font-size: 1.05rem;
+        white-space: nowrap;
+      }
+      .qty-row {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 6px 12px;
+        padding: 12px 0;
+        border-bottom: 1px dashed var(--line);
+      }
+      .qty-label {
+        font-weight: 600;
+      }
+      .qty-row .err {
+        flex-basis: 100%;
+      }
+      .sum-rows > div {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 10px 0;
+        color: var(--muted);
+      }
+      .sum-rows b {
+        color: var(--text);
+        font-weight: 600;
+      }
+      .sum-total {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 14px 0 16px;
+        border-top: 1px dashed var(--line);
+      }
+      .sum-total span {
+        font-weight: 700;
+        font-size: 1.15rem;
+      }
+      .sum-total strong {
+        color: var(--primary);
+        font-size: 1.6rem;
+      }
+      .cod {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 12px 14px;
+        border: 1.5px solid var(--primary);
+        border-radius: 14px;
+        background: #fff1e6;
+        font-weight: 600;
+      }
+      .cod-dot {
+        width: 22px;
+        height: 22px;
+        border-radius: 50%;
+        border: 2px solid var(--primary);
+        display: grid;
+        place-items: center;
+        flex: none;
+      }
+      .cod-dot::before {
+        content: "";
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: var(--primary);
+      }
+      .cod-ico {
+        width: 32px;
+        height: 32px;
+        border-radius: 9px;
+        background: var(--grad);
+        color: #fff;
+        display: grid;
+        place-items: center;
+        font-weight: 700;
+        flex: none;
+      }
+      .priv-link {
+        color: var(--primary);
+        font-weight: 600;
+        text-decoration: underline;
+      }
+      #confirmBtn {
+        margin-top: 16px;
+        font-size: 1.15rem;
+        padding-block: 16px;
+      }
+      #confirmBtn #btnTotal {
+        font-size: 1.35rem;
+        font-weight: 700;
+        line-height: 1;
+        margin-left: 2px;
+      }
+
+      /* Bangla digit clarity: one Bangla font for the whole checkout */
+      .order-grid,
+      .order-grid input,
+      .order-grid textarea,
+      .order-grid button {
+        font-family:
+          "Hind Siliguri",
+          "Public Sans",
+          system-ui,
+          -apple-system,
+          "Segoe UI",
+          sans-serif;
+      }
+      .order-grid .sum-info small {
+        font-size: 0.9rem;
+      }
+      .order-grid .sum-rows b,
+      .order-grid .sum-line,
+      .order-grid .zone-opt strong {
+        font-weight: 700;
+        font-size: 1.05rem;
+      }
+      .order-grid .qty input {
+        font-size: 1.2rem;
+        font-weight: 700;
+        line-height: 1.2;
+      }
+      /* compact quantity selector */
+      .qty-row {
+        padding: 8px 0;
+      }
+      .qty-label {
+        font-size: 0.95rem;
+      }
+      .qty {
+        height: 36px;
+      }
+      .qty button {
+        width: 34px;
+        font-size: 1.1rem;
+        padding: 0;
+      }
+      .order-grid .qty input,
+      .qty input {
+        width: 46px;
+        height: 100%;
+        padding: 0 2px;
+        font-size: 1rem;
+        line-height: 1;
+      }
+      .order-grid .sum-thumb b {
+        font-size: 0.85rem;
+        font-weight: 700;
+      }
+
       /* ---------- Footer (cloned from kitchen-prep-combo) ---------- */
       .kp-footer {
         background: #000;
@@ -1034,7 +1507,7 @@
       }
       @media (min-width: 768px) {
         .kp-footer .kp-grid {
-          grid-template-columns: repeat(3, minmax(0, 1fr));
+          grid-template-columns: 1.5fr 1fr 1fr 1fr;
         }
       }
       .kp-footer .kp-logo {
@@ -1181,6 +1654,15 @@
         }
       }
 
+      @media (max-width: 860px) {
+        .ofr-grid {
+          grid-template-columns: 1fr;
+        }
+        .ofr {
+          border-radius: 28px;
+        }
+      }
+
       @media (max-width: 768px) {
         body {
           font-size: 16.5px;
@@ -1277,12 +1759,6 @@
           font-size: 0.85rem;
           padding: 6px 12px;
         }
-        .op {
-          flex: 1 1 100%;
-        }
-        .offer-card .btn {
-          width: 100%;
-        }
 
         .sticky-cta {
           position: fixed;
@@ -1296,11 +1772,6 @@
           backdrop-filter: blur(10px);
           -webkit-backdrop-filter: blur(10px);
           box-shadow: 0 -6px 24px rgba(0, 0, 0, 0.12);
-          transform: translateY(110%);
-          transition: transform 0.35s var(--ease);
-        }
-        .sticky-cta.show {
-          transform: none;
         }
         .sticky-cta .btn {
           flex: 1;
@@ -1376,6 +1847,21 @@
         <symbol id="i-check" viewBox="0 0 24 24">
           <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14M22 4 12 14.01l-3-3" />
         </symbol>
+        <symbol id="i-tick" viewBox="0 0 24 24">
+          <path d="M5 12.5 10 17.5 19 7" />
+        </symbol>
+        <symbol id="i-truck" viewBox="0 0 24 24">
+          <path d="M1 3h15v13H1zM16 8h4l3 3v5h-7z" />
+          <circle cx="5.5" cy="18.5" r="2.5" />
+          <circle cx="18.5" cy="18.5" r="2.5" />
+        </symbol>
+        <symbol id="i-pin" viewBox="0 0 24 24">
+          <path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z" />
+          <circle cx="12" cy="10" r="3" />
+        </symbol>
+        <symbol id="i-doc" viewBox="0 0 24 24">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8zM14 2v6h6M16 13H8M16 17H8M10 9H8" />
+        </symbol>
         <symbol id="i-bed" viewBox="0 0 24 24">
           <path d="M2 4v16M2 8h18a2 2 0 0 1 2 2v10M2 17h20M6 8v9" />
         </symbol>
@@ -1422,17 +1908,21 @@
     <!-- ============ 1. HEADER ============ -->
     <header class="site-header" id="header">
       <div class="container header-inner">
-        <a href="https://www.prodhan.com" target="_blank" rel="noopener">
-              <img src="https://storage.biddabari.online/biddabari-bucket/uploads/all/9qz4cAe0HhgiQIbXSOOgm3JpVRU0M2bWyelwfijt.webp" alt="" class="kp-logo" />
-            </a>
+        <a href="https://www.prodhan.com" data-href="siteUrl" target="_blank" rel="noopener">
+          <img
+            src="https://storage.biddabari.online/biddabari-bucket/uploads/all/9qz4cAe0HhgiQIbXSOOgm3JpVRU0M2bWyelwfijt.webp"
+            alt=""
+            class="kp-logo"
+          />
+        </a>
         <!-- <a href="#home" class="brand" aria-label="Prodhan.com হোম">
           <span class="brand-mark">P</span
           ><span class="brand-text">Prodhan<span>.com</span></span>
         </a> -->
         <nav class="main-nav" id="mainNav" aria-label="প্রধান নেভিগেশন">
           <a href="#home" class="nav-link">হোম</a>
+          <a href="#gallery" class="nav-link">গ্যালারি</a>
           <a href="#features" class="nav-link">ফিচার</a>
-          <a href="#specs" class="nav-link">স্পেসিফিকেশন</a>
           <a href="#order" class="nav-link nav-cta">
             <svg
               class="cart-icon"
@@ -1444,7 +1934,9 @@
             >
               <path
                 d="M8.5,19A1.5,1.5,0,1,0,10,20.5,1.5,1.5,0,0,0,8.5,19ZM19,16H7a1,1,0,0,1,0-2h8.49121A3.0132,3.0132,0,0,0,18.376,11.82422L19.96143,6.2749A1.00009,1.00009,0,0,0,19,5H6.73907A3.00666,3.00666,0,0,0,3.92139,3H3A1,1,0,0,0,3,5h.92139a1.00459,1.00459,0,0,1,.96142.7251l.15552.54474.00024.00506L6.6792,12.01709A3.00006,3.00006,0,0,0,7,18H19a1,1,0,0,0,0-2ZM17.67432,7l-1.2212,4.27441A1.00458,1.00458,0,0,1,15.49121,12H8.75439l-.25494-.89221L7.32642,7ZM16.5,19A1.5,1.5,0,1,0,18,20.5,1.5,1.5,0,0,0,16.5,19Z"
-              /></svg>অর্ডার করুন</a>
+              /></svg
+            >অর্ডার করুন</a
+          >
         </nav>
         <button
           class="menu-toggle"
@@ -1471,21 +1963,32 @@
               শীতের দিনে উষ্ণতা ও আরামের
               <span class="grad-text">স্মার্ট সমাধান!</span>
             </h1>
-            <p class="product-name">Handy Room Heater — 800W Turbo</p>
+            <p class="product-name" data-text="productTitle">Handy Room Heater — 800W Turbo</p>
             <p class="hero-desc">
-              শীতের ঠান্ডায় ঘর বা অফিসে উষ্ণতা পেতে বেছে নিন Handy Room Heater।
+              শীতের ঠান্ডায় ঘর বা অফিসে উষ্ণতা পেতে বেছে নিন <span data-text="productName">Handy Room Heater</span>।
               এর কমপ্যাক্ট ও হ্যান্ডি ডিজাইন, রোটেটেবল প্লাগ এবং দ্রুত তাপ
               উৎপাদনের সুবিধা আপনার দৈনন্দিন ব্যবহারকে করবে আরও সহজ ও আরামদায়ক।
             </p>
 
             <div class="price-row">
-              <span class="price-now">৳1,690</span>
-              <span class="price-old">৳2,500</span>
-              <span class="badge-off">32% OFF</span>
+              <span class="price-now" data-price="unitPrice">৳১,৬৯০</span>
+              <span class="price-old" data-price="regularPrice">৳২,৫০০</span>
+              <span class="badge-off" data-text="discountLabel">৩২% ছাড়</span>
             </div>
 
             <div class="cta-row">
-              <a href="#order" class="btn btn-primary btn-pulse"
+              <a href="#order" class="btn btn-primary btn-pulse">
+                <svg
+                  class="cart-icon"
+                  fill="white"
+                  width="20px"
+                  height="20px"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M8.5,19A1.5,1.5,0,1,0,10,20.5,1.5,1.5,0,0,0,8.5,19ZM19,16H7a1,1,0,0,1,0-2h8.49121A3.0132,3.0132,0,0,0,18.376,11.82422L19.96143,6.2749A1.00009,1.00009,0,0,0,19,5H6.73907A3.00666,3.00666,0,0,0,3.92139,3H3A1,1,0,0,0,3,5h.92139a1.00459,1.00459,0,0,1,.96142.7251l.15552.54474.00024.00506L6.6792,12.01709A3.00006,3.00006,0,0,0,7,18H19a1,1,0,0,0,0-2ZM17.67432,7l-1.2212,4.27441A1.00458,1.00458,0,0,1,15.49121,12H8.75439l-.25494-.89221L7.32642,7ZM16.5,19A1.5,1.5,0,1,0,18,20.5,1.5,1.5,0,0,0,16.5,19Z"
+                  /></svg
                 >এখনই অর্ডার করুন</a
               >
               <a href="#features" class="btn btn-ghost">বিস্তারিত দেখুন</a>
@@ -1497,7 +2000,7 @@
             <div class="hero-img-wrap float" id="heroImgWrap">
               <img
                 id="heroImg"
-                src="https://storage.biddabari.online/biddabari-bucket/uploads/all/prodhan_asset/room-heater-asset/room-heater-1.webp"
+                src="https://storage.biddabari.online/biddabari-bucket/uploads/all/prodhan_asset/room-heater-asset/room-heater-1.webp" data-img="img1"
                 alt="Handy Room Heater 800W Turbo — প্রধান ছবি"
                 width="640"
                 height="640"
@@ -1524,7 +2027,7 @@
             <div class="gallery-main" id="galleryMain">
               <img
                 id="galleryImg"
-                src="https://storage.biddabari.online/biddabari-bucket/uploads/all/prodhan_asset/room-heater-asset/room-heater-1.webp"
+                src="https://storage.biddabari.online/biddabari-bucket/uploads/all/prodhan_asset/room-heater-asset/room-heater-1.webp" data-img="img1"
                 alt="Handy Room Heater — ছবি ১"
                 loading="lazy"
                 decoding="async"
@@ -1546,7 +2049,7 @@
                 aria-label="ছবি ১"
               >
                 <img
-                  src="https://storage.biddabari.online/biddabari-bucket/uploads/all/prodhan_asset/room-heater-asset/room-heater-1.webp"
+                  src="https://storage.biddabari.online/biddabari-bucket/uploads/all/prodhan_asset/room-heater-asset/room-heater-1.webp" data-img="img1"
                   alt=""
                   loading="lazy"
                   width="120"
@@ -1561,7 +2064,7 @@
                 aria-label="ছবি ২"
               >
                 <img
-                  src="https://storage.biddabari.online/biddabari-bucket/uploads/all/prodhan_asset/room-heater-asset/room-heater-2.webp"
+                  src="https://storage.biddabari.online/biddabari-bucket/uploads/all/prodhan_asset/room-heater-asset/room-heater-2.webp" data-img="img2"
                   alt=""
                   loading="lazy"
                   width="120"
@@ -1576,7 +2079,7 @@
                 aria-label="ছবি ৩"
               >
                 <img
-                  src="https://storage.biddabari.online/biddabari-bucket/uploads/all/prodhan_asset/room-heater-asset/room-heater-3.webp"
+                  src="https://storage.biddabari.online/biddabari-bucket/uploads/all/prodhan_asset/room-heater-asset/room-heater-3.webp" data-img="img3"
                   alt=""
                   loading="lazy"
                   width="120"
@@ -1593,7 +2096,7 @@
         <div class="container">
           <div class="section-head reveal">
             <span class="eyebrow">ফিচারসমূহ</span>
-            <h2 id="featTitle">কেন বেছে নেবেন Handy Room Heater?</h2>
+            <h2 id="featTitle">কেন বেছে নেবেন <span data-text="productName">Handy Room Heater</span>?</h2>
           </div>
           <div class="feature-grid">
             <article class="card feature reveal stagger">
@@ -1662,125 +2165,12 @@
         </div>
       </section>
 
-      <!-- ============ 5. EXPERIENCE ============ -->
-      <section
-        class="section section-soft experience"
-        id="experience"
-        aria-labelledby="expTitle"
-      >
-        <div class="container">
-          <div class="section-head reveal">
-            <span class="eyebrow">প্রোডাক্ট এক্সপেরিয়েন্স</span>
-            <h2 id="expTitle">ছোট্ট ডিজাইন, দারুণ উষ্ণতার অভিজ্ঞতা!</h2>
-          </div>
-          <div class="exp-stage reveal">
-            <div class="glow glow-sm" aria-hidden="true"></div>
-            <img
-              class="exp-img parallax"
-              data-speed="0.04"
-              src="https://storage.biddabari.online/biddabari-bucket/uploads/all/prodhan_asset/room-heater-asset/room-header-2.webp"
-              alt="Handy Room Heater কমপ্যাক্ট ডিজাইন"
-              loading="lazy"
-              decoding="async"
-              width="560"
-              height="560"
-            />
-            <span class="float-label fl-1">800W Turbo</span>
-            <span class="float-label fl-2">Compact &amp; Portable</span>
-            <span class="float-label fl-3">360° Rotatable Plug</span>
-            <span class="float-label fl-4">Smart Control</span>
-          </div>
-        </div>
-      </section>
-
-      <!-- ============ 6. USAGE AREAS ============ -->
-      <section class="section" id="usage-areas" aria-labelledby="areasTitle">
-        <div class="container">
-          <div class="section-head reveal">
-            <span class="eyebrow">ব্যবহারের জায়গা</span>
-            <h2 id="areasTitle">কোথায় ব্যবহার করবেন?</h2>
-          </div>
-          <div class="areas-grid">
-            <div class="card area reveal stagger">
-              <span class="icon-bubble"
-                ><svg class="i"><use href="#i-bed" /></svg
-              ></span>
-              <h3>বেডরুম ও লিভিং রুম</h3>
-            </div>
-            <div class="card area reveal stagger">
-              <span class="icon-bubble"
-                ><svg class="i"><use href="#i-laptop" /></svg
-              ></span>
-              <h3>হোম অফিস</h3>
-            </div>
-            <div class="card area reveal stagger">
-              <span class="icon-bubble"
-                ><svg class="i"><use href="#i-book" /></svg
-              ></span>
-              <h3>পড়াশোনা বা কাজের জায়গা</h3>
-            </div>
-            <div class="card area reveal stagger">
-              <span class="icon-bubble"
-                ><svg class="i"><use href="#i-home" /></svg
-              ></span>
-              <h3>অন্যান্য উপযুক্ত ইনডোর স্পেস</h3>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- ============ 7. SPECIFICATIONS ============ -->
+      <!-- ============ 5. USAGE & SAFETY ============ -->
       <section
         class="section section-soft"
-        id="specs"
-        aria-labelledby="specTitle"
+        id="safety"
+        aria-labelledby="safetyTitle"
       >
-        <div class="container narrow">
-          <div class="section-head reveal">
-            <span class="eyebrow">স্পেসিফিকেশন</span>
-            <h2 id="specTitle">পণ্যের বিবরণ</h2>
-          </div>
-          <div
-            class="spec-table reveal"
-            role="table"
-            aria-label="পণ্যের স্পেসিফিকেশন"
-          >
-            <div class="spec-row" role="row">
-              <span role="rowheader">Product Name</span
-              ><span role="cell">Handy Room Heater</span>
-            </div>
-            <div class="spec-row" role="row">
-              <span role="rowheader">Heater Type</span
-              ><span role="cell">800W Turbo</span>
-            </div>
-            <div class="spec-row" role="row">
-              <span role="rowheader">Power</span><span role="cell">800W</span>
-            </div>
-            <div class="spec-row" role="row">
-              <span role="rowheader">Heating System</span
-              ><span role="cell">Instant Heating</span>
-            </div>
-            <div class="spec-row" role="row">
-              <span role="rowheader">Plug Design</span
-              ><span role="cell">Rotatable Plug</span>
-            </div>
-            <div class="spec-row" role="row">
-              <span role="rowheader">Design</span
-              ><span role="cell">Compact &amp; Portable</span>
-            </div>
-            <div class="spec-row" role="row">
-              <span role="rowheader">Usage</span
-              ><span role="cell">Indoor Use</span>
-            </div>
-            <div class="spec-row" role="row">
-              <span role="rowheader">SKU</span><span role="cell">HRM123</span>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- ============ 8. USAGE & SAFETY ============ -->
-      <section class="section" id="safety" aria-labelledby="safetyTitle">
         <div class="container narrow">
           <div class="section-head reveal">
             <span class="eyebrow">নিরাপদ ব্যবহার</span>
@@ -1858,30 +2248,84 @@
         </div>
       </section>
 
-      <!-- ============ 9. SPECIAL OFFER ============ -->
+      <!-- ============ 6. SPECIAL OFFER (redesigned) ============ -->
       <section class="section" id="offer" aria-labelledby="offerTitle">
         <div class="container">
-          <div class="offer-card reveal">
-            <div class="offer-glow" aria-hidden="true"></div>
-            <span class="badge-winter light"
-              ><svg class="i"><use href="#i-zap" /></svg> বিশেষ অফার</span
-            >
-            <h2 id="offerTitle">Handy Room Heater — 800W Turbo</h2>
-            <div class="offer-prices">
-              <div class="op"><small>Regular Price</small><s>৳2,500</s></div>
-              <div class="op main">
-                <small>Special Price</small><strong>৳1,690</strong>
+          <div class="ofr reveal">
+            <span class="ofr-ring" aria-hidden="true"></span>
+            <span class="ofr-ring r2" aria-hidden="true"></span>
+
+            <div class="ofr-grid">
+              <!-- left: copy -->
+              <div class="ofr-copy">
+                <span class="badge-winter light"
+                  ><svg class="i"><use href="#i-zap" /></svg> বিশেষ অফার</span
+                >
+                <h2 class="ofr-title" id="offerTitle">
+                  শীতের উষ্ণতা এখন
+                  <span class="hl">বিশেষ দামে!</span>
+                </h2>
+                <p class="ofr-sub">
+                  <span data-text="productTitle">Handy Room Heater — 800W Turbo</span> এখন রেগুলার দামের চেয়ে অনেক
+                  কমে।
+                </p>
+                <ul class="ofr-list">
+                  <li>
+                    <span class="tick"
+                      ><svg class="i"><use href="#i-tick" /></svg
+                    ></span>
+                    800W Instant Heating
+                  </li>
+                  <li>
+                    <span class="tick"
+                      ><svg class="i"><use href="#i-tick" /></svg
+                    ></span>
+                    Touch &amp; Remote Control
+                  </li>
+                  <li>
+                    <span class="tick"
+                      ><svg class="i"><use href="#i-tick" /></svg
+                    ></span>
+                    360° Rotatable Plug, Compact ডিজাইন
+                  </li>
+                </ul>
               </div>
-              <div class="op"><small>You Save</small><em>৳810</em></div>
+
+              <!-- right: price ticket -->
+              <div class="ofr-ticket">
+                <span class="ofr-ribbon" data-text="discountLabel">৩২% ছাড়</span>
+                <div class="ofr-label">রেগুলার প্রাইস</div>
+                <div class="ofr-old" data-price="regularPrice">৳২,৫০০</div>
+                <div class="ofr-label" style="margin-top: 12px">
+                  স্পেশাল প্রাইস
+                </div>
+                <div class="ofr-price" data-price="unitPrice">৳১,৬৯০</div>
+                <span class="ofr-save">আপনার সাশ্রয় <span data-price="savings">৳৮১০</span></span>
+
+                <div class="ofr-tear" aria-hidden="true"></div>
+
+                <a href="#order" class="btn btn-primary btn-pulse">
+                  <svg
+                    class="cart-icon"
+                    fill="white"
+                    width="20px"
+                    height="20px"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M8.5,19A1.5,1.5,0,1,0,10,20.5,1.5,1.5,0,0,0,8.5,19ZM19,16H7a1,1,0,0,1,0-2h8.49121A3.0132,3.0132,0,0,0,18.376,11.82422L19.96143,6.2749A1.00009,1.00009,0,0,0,19,5H6.73907A3.00666,3.00666,0,0,0,3.92139,3H3A1,1,0,0,0,3,5h.92139a1.00459,1.00459,0,0,1,.96142.7251l.15552.54474.00024.00506L6.6792,12.01709A3.00006,3.00006,0,0,0,7,18H19a1,1,0,0,0,0-2ZM17.67432,7l-1.2212,4.27441A1.00458,1.00458,0,0,1,15.49121,12H8.75439l-.25494-.89221L7.32642,7ZM16.5,19A1.5,1.5,0,1,0,18,20.5,1.5,1.5,0,0,0,16.5,19Z"
+                    /></svg
+                  >এখনই অর্ডার করুন
+                </a>
+                <p class="ofr-note">ডেলিভারি চার্জ এলাকা অনুযায়ী প্রযোজ্য।</p>
+              </div>
             </div>
-            <a href="#order" class="btn btn-white btn-pulse"
-              >এখনই অর্ডার করুন</a
-            >
           </div>
         </div>
       </section>
 
-      <!-- ============ 10. ORDER FORM ============ -->
+      <!-- ============ 7. ORDER FORM ============ -->
       <section
         class="section section-soft"
         id="order"
@@ -1895,72 +2339,60 @@
 
           <div class="order-grid">
             <form class="card order-form reveal" id="orderForm" novalidate>
+              <h3 class="ord-h">
+                <svg class="i"><use href="#i-truck" /></svg> ডেলিভারি এলাকা বেছে নিন
+              </h3>
+              <div
+                class="zone-options"
+                id="zoneOptions"
+                role="radiogroup"
+                aria-label="ডেলিভারি এলাকা"
+              ></div>
+
               <div class="field">
-                <label for="name">আপনার নাম</label>
+                <label for="name">আপনার নাম লিখুন <i class="req">*</i></label>
                 <input
                   type="text"
                   id="name"
                   name="name"
                   autocomplete="name"
-                  placeholder="আপনার পুরো নাম"
+                  placeholder="আপনার সম্পূর্ণ নাম লিখুন"
                   required
                 />
                 <small class="err" data-for="name"></small>
               </div>
               <div class="field">
-                <label for="phone">মোবাইল নম্বর</label>
-                <input
-                  type="tel"
-                  id="phone"
-                  name="phone"
-                  inputmode="numeric"
-                  autocomplete="tel"
-                  placeholder="01XXXXXXXXX"
-                  required
-                />
+                <label for="phone">আপনার ফোন নম্বরটি লিখুন <i class="req">*</i></label>
+                <div class="phone-group">
+                  <span class="phone-pre">
+                    <svg class="flag" viewBox="0 0 24 16" aria-hidden="true"><rect width="24" height="16" rx="2" fill="#006a4e" /><circle cx="10.5" cy="8" r="4.4" fill="#f42a41" /></svg>
+                    +88
+                  </span>
+                  <input
+                    type="tel"
+                    id="phone"
+                    name="phone"
+                    maxlength="11"
+                    inputmode="numeric"
+                    autocomplete="tel"
+                    placeholder="01XXXXXXXXX"
+                    required
+                  />
+                </div>
                 <small class="err" data-for="phone"></small>
               </div>
               <div class="field">
-                <label for="address">সম্পূর্ণ ঠিকানা</label>
+                <label for="address">আপনার সম্পূর্ণ ঠিকানাটি লিখুন <i class="req">*</i></label>
                 <textarea
                   id="address"
                   name="address"
-                  rows="3"
+                  rows="4"
                   autocomplete="street-address"
-                  placeholder="বাসা/রোড, এলাকা, থানা, জেলা"
+                  placeholder="জেলা, থানা ও এলাকা/রোড নং বিস্তারিত লিখুন"
                   required
                 ></textarea>
                 <small class="err" data-for="address"></small>
               </div>
-              <div class="field">
-                <label for="qtyValue">পণ্যের পরিমাণ</label>
-                <div class="qty">
-                  <button type="button" id="qtyMinus" aria-label="পরিমাণ কমান">
-                    −
-                  </button>
-                  <input
-                    type="number"
-                    id="qtyValue"
-                    name="quantity"
-                    min="1"
-                    max="10"
-                    value="1"
-                    inputmode="numeric"
-                  />
-                  <button type="button" id="qtyPlus" aria-label="পরিমাণ বাড়ান">
-                    +
-                  </button>
-                </div>
-                <small class="err" data-for="quantity"></small>
-              </div>
-              <div class="field">
-                <label for="zone">ডেলিভারি এলাকা</label>
-                <select id="zone" name="zone" required></select>
-                <small class="err" data-for="zone"></small>
-              </div>
-              <button type="submit" class="btn btn-primary btn-block btn-pulse">
-                অর্ডার নিশ্চিত করুন
-              </button>
             </form>
 
             <aside
@@ -1968,81 +2400,167 @@
               aria-live="polite"
               aria-label="অর্ডার সামারি"
             >
-              <h3>অর্ডার সামারি</h3>
-              <dl>
+              <h3 class="ord-h">
+                <svg class="i"><use href="#i-doc" /></svg> অর্ডার সামারি
+              </h3>
+              <div class="sum-head"><span>পণ্য</span><span>সর্বমোট</span></div>
+
+              <div class="sum-item">
+                <div class="sum-thumb">
+                  <img
+                    src="https://storage.biddabari.online/biddabari-bucket/uploads/all/prodhan_asset/room-heater-asset/room-heater-1.webp" data-img="img1"
+                    alt="Handy Room Heater"
+                    width="60"
+                    height="60"
+                    loading="lazy"
+                  />
+                  <b id="sumBadge">1</b>
+                </div>
+                <div class="sum-info">
+                  <strong data-text="productName">Handy Room Heater</strong>
+                  <small id="sumMeta">SKU: HRM123</small>
+                </div>
+                <span class="sum-line" id="sumLine">৳১,৬৯০</span>
+              </div>
+
+              <div class="field qty-row">
+                <span class="qty-label">পণ্যের পরিমাণ</span>
+                <div class="qty">
+                  <button type="button" id="qtyMinus" aria-label="পরিমাণ কমান">−</button>
+                  <input
+                    type="text"
+                    id="qtyValue"
+                    name="quantity"
+                    form="orderForm"
+                    maxlength="2"
+                    value="১"
+                    inputmode="numeric"
+                    autocomplete="off"
+                    aria-label="পণ্যের পরিমাণ"
+                  />
+                  <button type="button" id="qtyPlus" aria-label="পরিমাণ বাড়ান">+</button>
+                </div>
+                <small class="err" data-for="quantity"></small>
+              </div>
+
+              <div class="sum-rows">
+                <div><span>সাবটোটাল</span><b id="sumSub">৳১,৬৯০</b></div>
                 <div>
-                  <dt>Product</dt>
-                  <dd>Handy Room Heater</dd>
+                  <span>ডেলিভারির চার্জ (<span id="sumZoneName"></span>)</span
+                  ><b id="sumDel">৳০</b>
                 </div>
-                <div>
-                  <dt>SKU</dt>
-                  <dd>HRM123</dd>
-                </div>
-                <div>
-                  <dt>Unit Price</dt>
-                  <dd id="sumUnit">৳1,690</dd>
-                </div>
-                <div>
-                  <dt>Quantity</dt>
-                  <dd id="sumQty">1</dd>
-                </div>
-                <div>
-                  <dt>Subtotal</dt>
-                  <dd id="sumSub">৳1,690</dd>
-                </div>
-                <div>
-                  <dt>Delivery Charge</dt>
-                  <dd id="sumDel">—</dd>
-                </div>
-                <div class="total">
-                  <dt>Total Amount</dt>
-                  <dd id="sumTotal">৳1,690</dd>
-                </div>
-              </dl>
+              </div>
+              <div class="sum-total">
+                <span>সর্বমোট</span><strong id="sumTotal">৳১,৬৯০</strong>
+              </div>
+
+              <div class="cod">
+                <span class="cod-dot"></span>
+                <span class="cod-ico">৳</span>
+                <span>Cash on Delivery</span>
+              </div>
+              <p class="note">ডেলিভারির সময় টাকা পরিশোধ করুন।</p>
               <p class="note">
-                ডেলিভারি চার্জ নির্বাচিত এলাকা অনুযায়ী হিসাব হয়।
+                আপনার তথ্য শুধুমাত্র অর্ডার প্রসেস করার জন্য ব্যবহার করা হবে।
+                <a href="https://www.prodhan.com/privacy-policy" data-href="privacyUrl" target="_blank" rel="noopener" class="priv-link">Privacy Policy</a>
               </p>
+
+              <button
+                type="submit"
+                form="orderForm"
+                class="btn btn-primary btn-block btn-pulse"
+                id="confirmBtn"
+              >
+                <svg class="cart-icon" fill="white" width="20px" height="20px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M8.5,19A1.5,1.5,0,1,0,10,20.5,1.5,1.5,0,0,0,8.5,19ZM19,16H7a1,1,0,0,1,0-2h8.49121A3.0132,3.0132,0,0,0,18.376,11.82422L19.96143,6.2749A1.00009,1.00009,0,0,0,19,5H6.73907A3.00666,3.00666,0,0,0,3.92139,3H3A1,1,0,0,0,3,5h.92139a1.00459,1.00459,0,0,1,.96142.7251l.15552.54474.00024.00506L6.6792,12.01709A3.00006,3.00006,0,0,0,7,18H19a1,1,0,0,0,0-2ZM17.67432,7l-1.2212,4.27441A1.00458,1.00458,0,0,1,15.49121,12H8.75439l-.25494-.89221L7.32642,7ZM16.5,19A1.5,1.5,0,1,0,18,20.5,1.5,1.5,0,0,0,16.5,19Z"/></svg>অর্ডার কনফার্ম <span id="btnTotal">৳১,৬৯০</span>
+              </button>
             </aside>
           </div>
         </div>
       </section>
     </main>
 
-    <!-- ============ 11. FOOTER ============ -->
+    <!-- ============ 8. FOOTER ============ -->
     <footer class="kp-footer">
       <div class="kp-wrap">
         <div class="kp-grid">
           <div>
-            <a href="https://www.prodhan.com" target="_blank" rel="noopener">
-              <img src="https://storage.biddabari.online/biddabari-bucket/uploads/all/9qz4cAe0HhgiQIbXSOOgm3JpVRU0M2bWyelwfijt.webp" alt="" class="kp-logo" />
+            <a href="https://www.prodhan.com" data-href="siteUrl" target="_blank" rel="noopener">
+              <img
+                src="https://storage.biddabari.online/biddabari-bucket/uploads/all/9qz4cAe0HhgiQIbXSOOgm3JpVRU0M2bWyelwfijt.webp"
+                alt=""
+                class="kp-logo"
+              />
             </a>
             <p class="kp-desc">
-              বিশ্বাস, মানসম্মত পণ্য ও দ্রুত ডেলিভারির মাধ্যমে সারাদেশের গ্রাহকদের আস্থার প্রতিষ্ঠান। সঠিক দামে নির্ভরযোগ্য পণ্য ও আন্তরিক সেবা নিশ্চিত করাই আমাদের অঙ্গীকার।
+              বিশ্বাস, মানসম্মত পণ্য ও দ্রুত ডেলিভারির মাধ্যমে সারাদেশের
+              গ্রাহকদের আস্থার প্রতিষ্ঠান। সঠিক দামে নির্ভরযোগ্য পণ্য ও আন্তরিক
+              সেবা নিশ্চিত করাই আমাদের অঙ্গীকার।
             </p>
           </div>
           <div>
             <h5>যোগাযোগ</h5>
-            <p class="kp-mb">📞 <a href="tel:+8809643330000">+880 9643-330000</a></p>
-            <p class="kp-mb">🌐 <a href="https://www.prodhan.com" target="_blank" rel="noopener">www.prodhan.com</a></p>
+            <p class="kp-mb">
+              📞 <a href="tel:+8809643330000" data-href="phoneHref" data-text="phoneDisplay">+880 9643-330000</a>
+            </p>
+            <p class="kp-mb">
+              🌐
+              <a href="https://www.prodhan.com" data-href="siteUrl" target="_blank" rel="noopener"
+                ><span data-text="siteDomain">www.prodhan.com</span></a
+              >
+            </p>
             <p class="kp-mb">📍 ঢাকা, বাংলাদেশ</p>
           </div>
           <div>
             <h5>দ্রুত লিংক</h5>
-            <p class="kp-mb"><a href="#specs" class="kp-hover">প্রোডাক্ট আইটেম</a></p>
-            <p class="kp-mb"><a href="#features" class="kp-hover">মূল বৈশিষ্ট্য</a></p>
-            <p class="kp-mb"><a href="#order" class="kp-hover">অর্ডার করুন</a></p>
+            <p class="kp-mb">
+              <a href="#gallery" class="kp-hover">প্রোডাক্ট গ্যালারি</a>
+            </p>
+            <p class="kp-mb">
+              <a href="#features" class="kp-hover">মূল বৈশিষ্ট্য</a>
+            </p>
+            <p class="kp-mb">
+              <a href="#order" class="kp-hover">অর্ডার করুন</a>
+            </p>
+          </div>
+          <div>
+            <h5>আরও জানুন</h5>
+            <p class="kp-mb">
+              <a href="#safety" class="kp-hover">ব্যবহার ও সতর্কতা</a>
+            </p>
+            <p class="kp-mb">
+              <a
+                href="https://www.prodhan.com/privacy-policy" data-href="privacyUrl"
+                class="kp-hover"
+                target="_blank"
+                rel="noopener"
+                >প্রাইভেসি পলিসি</a
+              >
+            </p>
           </div>
         </div>
         <div class="kp-copy">
-          Copyright © 2026 prodhan.com All rights reserved
+          Copyright © <span data-text="year">2026</span> <span data-text="siteDomain">prodhan.com</span> All rights reserved
         </div>
       </div>
     </footer>
 
     <!-- Sticky bottom order button (mobile) -->
     <div class="sticky-cta" id="stickyCta">
-      <div class="sticky-price"><s>৳2,500</s><strong>৳1,690</strong></div>
-      <a href="#order" class="btn btn-primary">এখনই অর্ডার করুন</a>
+      <div class="sticky-price"><s id="stickyOld">৳২,৫০০</s><strong id="stickyTotal">৳১,৬৯০</strong></div>
+      <a href="#order" class="btn btn-primary" id="stickyOrderBtn">
+        <svg
+          class="cart-icon"
+          fill="white"
+          width="20px"
+          height="20px"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M8.5,19A1.5,1.5,0,1,0,10,20.5,1.5,1.5,0,0,0,8.5,19ZM19,16H7a1,1,0,0,1,0-2h8.49121A3.0132,3.0132,0,0,0,18.376,11.82422L19.96143,6.2749A1.00009,1.00009,0,0,0,19,5H6.73907A3.00666,3.00666,0,0,0,3.92139,3H3A1,1,0,0,0,3,5h.92139a1.00459,1.00459,0,0,1,.96142.7251l.15552.54474.00024.00506L6.6792,12.01709A3.00006,3.00006,0,0,0,7,18H19a1,1,0,0,0,0-2ZM17.67432,7l-1.2212,4.27441A1.00458,1.00458,0,0,1,15.49121,12H8.75439l-.25494-.89221L7.32642,7ZM16.5,19A1.5,1.5,0,1,0,18,20.5,1.5,1.5,0,0,0,16.5,19Z"
+          /></svg
+        >এখনই অর্ডার করুন</a
+      >
     </div>
 
     <!-- Order confirmation modal -->
@@ -2077,15 +2595,29 @@
 
         /* ---------- CONFIG (edit here) ---------- */
         const CONFIG = {
+          // ===== Single source of truth: edit values here, the page updates everywhere =====
+          shopName: "Prodhan.com",
+          siteUrl: "https://www.prodhan.com",
+          siteDomain: "prodhan.com",
+          privacyUrl: "https://www.prodhan.com/privacy-policy",
+          phone: "+8809643330000",
+          phoneDisplay: "+880 9643-330000",
+          year: 2026,
           sku: "HRM123",
           productName: "Handy Room Heater",
+          productTitle: "Handy Room Heater — 800W Turbo",
           unitPrice: 1690,
           regularPrice: 2500,
           maxQty: 10,
-          // Delivery zones. Charges are PLACEHOLDER values — replace with real ones.
+          images: {
+            img1: "https://storage.biddabari.online/biddabari-bucket/uploads/all/prodhan_asset/room-heater-asset/room-heater-1.webp",
+            img2: "https://storage.biddabari.online/biddabari-bucket/uploads/all/prodhan_asset/room-heater-asset/room-heater-2.webp",
+            img3: "https://storage.biddabari.online/biddabari-bucket/uploads/all/prodhan_asset/room-heater-asset/room-heater-3.webp",
+          },
+          // Delivery zones: Inside Dhaka ৳60, Outside Dhaka ৳110.
           deliveryZones: [
-            { id: "dhaka", label: "ঢাকা সিটির ভেতরে", charge: 80 },
-            { id: "outside", label: "ঢাকার বাইরে", charge: 130 },
+            { id: "dhaka", label: "ঢাকার ভিতরে", short: "ঢাকার ভিতরে", icon: "i-home", charge: 60 },
+            { id: "outside", label: "ঢাকার বাইরে (সারাদেশ)", short: "ঢাকার বাইরে", icon: "i-pin", charge: 110 },
           ],
           // Set this to your order API URL when a backend is ready.
           // While null, nothing is sent anywhere.
@@ -2097,7 +2629,43 @@
         const reduceMotion = window.matchMedia(
           "(prefers-reduced-motion: reduce)",
         ).matches;
-        const fmt = (n) => "৳" + Number(n).toLocaleString("en-US");
+        const toBn = (v) => String(v).replace(/\d/g, (d) => "০১২৩৪৫৬৭৮৯"[d]);
+        const fromBn = (v) =>
+          String(v).replace(/[০-৯]/g, (d) => "০১২৩৪৫৬৭৮৯".indexOf(d));
+        const fmt = (n) => "৳" + toBn(Number(n).toLocaleString("en-US"));
+
+        /* ---------- Bind CONFIG to the page (data-text / data-price / data-href / data-img) ---------- */
+        (() => {
+          const savings = CONFIG.regularPrice - CONFIG.unitPrice;
+          const pct = Math.round((savings / CONFIG.regularPrice) * 100);
+          const texts = { ...CONFIG, discountLabel: `${toBn(pct)}% ছাড়` };
+          const prices = {
+            unitPrice: CONFIG.unitPrice,
+            regularPrice: CONFIG.regularPrice,
+            savings,
+          };
+          const hrefs = {
+            siteUrl: CONFIG.siteUrl,
+            privacyUrl: CONFIG.privacyUrl,
+            phoneHref: "tel:" + CONFIG.phone.replace(/[^0-9+]/g, ""),
+          };
+          $$("[data-text]").forEach((el) => {
+            const v = texts[el.dataset.text];
+            if (v !== undefined && typeof v !== "object") el.textContent = v;
+          });
+          $$("[data-price]").forEach((el) => {
+            const v = prices[el.dataset.price];
+            if (v !== undefined) el.textContent = fmt(v);
+          });
+          $$("[data-href]").forEach((el) => {
+            const v = hrefs[el.dataset.href];
+            if (v) el.setAttribute("href", v);
+          });
+          $$("[data-img]").forEach((el) => {
+            const v = CONFIG.images[el.dataset.img];
+            if (v) el.setAttribute("src", v);
+          });
+        })();
 
         /* ---------- Sticky header + mobile nav ---------- */
         const header = $("#header");
@@ -2144,11 +2712,6 @@
             });
           }
 
-          // Sticky bottom CTA: show after hero, hide when the order form is on screen
-          const pastHero = y > window.innerHeight * 0.6;
-          const r = orderSection.getBoundingClientRect();
-          const inOrder = r.top < window.innerHeight * 0.85 && r.bottom > 0;
-          stickyCta.classList.toggle("show", pastHero && !inOrder);
           ticking = false;
         };
         window.addEventListener(
@@ -2180,7 +2743,7 @@
           },
           { rootMargin: "-45% 0px -50% 0px" },
         );
-        ["home", "features", "specs", "order"].forEach((id) => {
+        ["home", "gallery", "features", "order"].forEach((id) => {
           const el = document.getElementById(id);
           if (el) spy.observe(el);
         });
@@ -2214,16 +2777,16 @@
         /* ---------- Gallery: thumbnails, hover zoom ---------- */
         const IMAGES = [
           {
-            src: "https://storage.biddabari.online/biddabari-bucket/uploads/all/prodhan_asset/room-heater-asset/room-heater-1.webp",
-            alt: "Handy Room Heater — ছবি ১",
+            src: CONFIG.images.img1,
+            alt: `${CONFIG.productName} — ছবি ১`,
           },
           {
-            src: "https://storage.biddabari.online/biddabari-bucket/uploads/all/prodhan_asset/room-heater-asset/room-heater-2.webp",
-            alt: "Handy Room Heater — ছবি ২",
+            src: CONFIG.images.img2,
+            alt: `${CONFIG.productName} — ছবি ২`,
           },
           {
-            src: "https://storage.biddabari.online/biddabari-bucket/uploads/all/prodhan_asset/room-heater-asset/room-heater-3.webp",
-            alt: "Handy Room Heater — ছবি ৩",
+            src: CONFIG.images.img3,
+            alt: `${CONFIG.productName} — ছবি ৩`,
           },
         ];
         let current = 0;
@@ -2283,25 +2846,27 @@
 
         /* ---------- Order form ---------- */
         const form = $("#orderForm");
-        const zoneSel = $("#zone");
+        const zoneBox = $("#zoneOptions");
         const qtyInput = $("#qtyValue");
 
-        // Build delivery select
-        zoneSel.innerHTML =
-          '<option value="">— এলাকা নির্বাচন করুন —</option>' +
-          CONFIG.deliveryZones
-            .map(
-              (z) =>
-                `<option value="${z.id}">${z.label} (${fmt(z.charge)})</option>`,
-            )
-            .join("");
+        // Build delivery options (first one selected by default)
+        zoneBox.innerHTML = CONFIG.deliveryZones
+          .map(
+            (z, i) =>
+              `<label class="zone-opt"><input type="radio" name="zone" value="${z.id}"${i === 0 ? " checked" : ""} /><span class="zone-ico"><svg class="i"><use href="#${z.icon}" /></svg></span><span class="zone-name">${z.label}</span><strong>${fmt(z.charge)}</strong></label>`,
+          )
+          .join("");
 
         const getQty = () => {
-          const q = parseInt(qtyInput.value, 10);
+          const q = parseInt(fromBn(qtyInput.value), 10);
           return Number.isFinite(q) ? q : 0;
         };
-        const getZone = () =>
-          CONFIG.deliveryZones.find((z) => z.id === zoneSel.value) || null;
+        const getZone = () => {
+          const c = form.querySelector('input[name="zone"]:checked');
+          return (
+            CONFIG.deliveryZones.find((z) => c && z.id === c.value) || null
+          );
+        };
 
         // Dynamic order summary
         const updateSummary = () => {
@@ -2309,22 +2874,32 @@
           const zone = getZone();
           const sub = qty * CONFIG.unitPrice;
           const del = zone ? zone.charge : 0;
-          $("#sumUnit").textContent = fmt(CONFIG.unitPrice);
-          $("#sumQty").textContent = qty;
+          $("#sumBadge").textContent = toBn(qty);
+          $("#sumMeta").textContent =
+            `SKU: ${CONFIG.sku} • ${fmt(CONFIG.unitPrice)} × ${toBn(qty)}`;
+          $("#sumLine").textContent = fmt(sub);
           $("#sumSub").textContent = fmt(sub);
-          $("#sumDel").textContent = zone ? fmt(del) : "এলাকা নির্বাচন করুন";
+          $("#sumZoneName").textContent = zone ? zone.short : "";
+          $("#sumDel").textContent = fmt(del);
           $("#sumTotal").textContent = fmt(sub + del);
+          $("#btnTotal").textContent = fmt(sub + del);
+          $("#stickyOld").textContent = fmt(qty * CONFIG.regularPrice + del);
+          $("#stickyTotal").textContent = fmt(sub + del);
         };
 
         const setQty = (n) => {
-          qtyInput.value = Math.min(Math.max(n, 1), CONFIG.maxQty);
+          qtyInput.value = toBn(Math.min(Math.max(n, 1), CONFIG.maxQty));
           updateSummary();
         };
         $("#qtyMinus").addEventListener("click", () => setQty(getQty() - 1));
         $("#qtyPlus").addEventListener("click", () => setQty(getQty() + 1));
-        qtyInput.addEventListener("input", updateSummary);
+        qtyInput.addEventListener("input", () => {
+          qtyInput.value = toBn(fromBn(qtyInput.value).replace(/\D/g, ""));
+          updateSummary();
+        });
         qtyInput.addEventListener("blur", () => setQty(getQty() || 1));
-        zoneSel.addEventListener("change", updateSummary);
+        zoneBox.addEventListener("change", updateSummary);
+        form.addEventListener("reset", () => setTimeout(updateSummary, 0));
         updateSummary();
 
         // Convert Bangla digits to English so "০১৭..." is accepted
@@ -2336,6 +2911,14 @@
           const clean = bnToEn(raw).replace(/[\s-]/g, "");
           return BD_MOBILE.test(clean) ? clean.replace(/^\+?88/, "") : null;
         };
+
+        // Phone field: digits only, Bangla -> English digits, auto-strip +88 / 88 / 0088, max 11 digits
+        form.elements.phone.addEventListener("input", function () {
+          this.value = bnToEn(this.value)
+            .replace(/\D/g, "")
+            .replace(/^(00)?8801/, "01")
+            .slice(0, 11);
+        });
 
         const setError = (name, msg) => {
           const field = form.elements[name].closest(".field");
@@ -2355,12 +2938,12 @@
           check(
             "phone",
             normalizePhone(v("phone")) !== null,
-            "সঠিক বাংলাদেশি মোবাইল নম্বর দিন (যেমন: 017XXXXXXXX)।",
+            "সঠিক বাংলাদেশি মোবাইল নম্বর দিন (01XXXXXXXXX)।",
           );
           check(
             "address",
-            v("address").length >= 10,
-            "সম্পূর্ণ ঠিকানা লিখুন (কমপক্ষে ১০ অক্ষর)।",
+            v("address").length >= 2,
+            "সম্পূর্ণ ঠিকানা লিখুন।",
           );
           const q = getQty();
           check(
@@ -2368,12 +2951,11 @@
             q >= 1 && q <= CONFIG.maxQty,
             `পরিমাণ ১ থেকে ${CONFIG.maxQty} এর মধ্যে হতে হবে।`,
           );
-          check("zone", !!getZone(), "ডেলিভারি এলাকা নির্বাচন করুন।");
           return ok;
         };
 
         // Clear an error as soon as the user edits the field
-        ["name", "phone", "address", "zone", "quantity"].forEach((n) => {
+        ["name", "phone", "address", "quantity"].forEach((n) => {
           form.elements[n].addEventListener("input", () => setError(n, ""));
         });
 
@@ -2434,7 +3016,7 @@
             ["ঠিকানা", payload.customer.address],
             [
               "পণ্য",
-              `${payload.product} (${payload.sku}) × ${payload.quantity}`,
+              `${payload.product} (${payload.sku}) × ${toBn(payload.quantity)}`,
             ],
             ["ডেলিভারি চার্জ", fmt(payload.deliveryCharge)],
             ["মোট", fmt(payload.total)],
@@ -2473,10 +3055,13 @@
               ".field.invalid input, .field.invalid textarea, .field.invalid select",
               form,
             );
-            if (firstBad) firstBad.focus();
+            if (firstBad) {
+              firstBad.scrollIntoView({ behavior: "smooth", block: "center" });
+              firstBad.focus({ preventScroll: true });
+            }
             return;
           }
-          const btn = $('button[type="submit"]', form);
+          const btn = $("#confirmBtn");
           btn.disabled = true;
           try {
             const payload = buildPayload();
@@ -2491,6 +3076,14 @@
           } finally {
             btn.disabled = false;
           }
+        });
+
+        // Sticky bottom button (mobile): confirms the order with the same validation
+        $("#stickyOrderBtn").addEventListener("click", (e) => {
+          e.preventDefault();
+          if ($("#confirmBtn").disabled) return;
+          if (form.requestSubmit) form.requestSubmit();
+          else form.dispatchEvent(new Event("submit", { cancelable: true }));
         });
       })();
     </script>
