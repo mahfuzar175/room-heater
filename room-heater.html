@@ -1544,6 +1544,60 @@
         color: #8f8f8f;
       }
 
+      /* ---------- Contact (Call + WhatsApp) ---------- */
+      .contact-box {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 22px;
+      }
+      .contact-card {
+        text-align: center;
+        display: grid;
+        justify-items: center;
+        gap: 6px;
+      }
+      .contact-card .icon-bubble {
+        margin-bottom: 8px;
+      }
+      .contact-card h3 {
+        font-size: 1.25rem;
+      }
+      .contact-num {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--primary);
+        margin-bottom: 10px;
+      }
+      .contact-card .btn {
+        width: min(100%, 280px);
+      }
+      .icon-bubble.wa {
+        background: linear-gradient(135deg, #1faa59 0%, #25d366 100%);
+      }
+      /* WhatsApp logo is a filled icon (not outlined) */
+      .icon-bubble.wa .i,
+      .fc-wa .i {
+        fill: currentColor;
+        stroke: none;
+      }
+      .btn-wa {
+        background: linear-gradient(135deg, #1faa59 0%, #25d366 100%);
+        color: #fff;
+        box-shadow: 0 12px 30px rgba(37, 211, 102, 0.3);
+      }
+      .btn-wa:hover {
+        box-shadow: 0 16px 40px rgba(37, 211, 102, 0.45);
+      }
+      .contact-time {
+        text-align: center;
+        color: var(--muted);
+        margin-top: 18px;
+        font-size: 0.95rem;
+      }
+      .float-contact {
+        display: none;
+      }
+
       /* ---------- Sticky CTA (mobile) ---------- */
       .sticky-cta {
         display: none;
@@ -1794,6 +1848,45 @@
         }
       }
 
+      @media (max-width: 640px) {
+        .contact-box {
+          grid-template-columns: 1fr;
+        }
+      }
+      @media (max-width: 768px) {
+        .float-contact {
+          position: fixed;
+          right: 12px;
+          bottom: calc(92px + env(safe-area-inset-bottom));
+          z-index: 95;
+          display: grid;
+          gap: 12px;
+        }
+        .fc-btn {
+          display: grid;
+          place-items: center;
+          width: 52px;
+          height: 52px;
+          border-radius: 50%;
+          color: #fff;
+          box-shadow: 0 8px 22px rgba(0, 0, 0, 0.25);
+          transition: transform 0.2s var(--ease);
+        }
+        .fc-btn:active {
+          transform: scale(0.92);
+        }
+        .fc-btn .i {
+          width: 26px;
+          height: 26px;
+        }
+        .fc-call {
+          background: var(--grad);
+        }
+        .fc-wa {
+          background: linear-gradient(135deg, #1faa59 0%, #25d366 100%);
+        }
+      }
+
       /* ---------- Reduced motion ---------- */
       @media (prefers-reduced-motion: reduce) {
         html {
@@ -1933,6 +2026,7 @@
           <a href="#home" class="nav-link">হোম</a>
           <a href="#gallery" class="nav-link">গ্যালারি</a>
           <a href="#features" class="nav-link">ফিচার</a>
+          <a href="#contact" class="nav-link">যোগাযোগ</a>
           <a href="#order" class="nav-link nav-cta">
             <svg
               class="cart-icon"
@@ -2360,7 +2454,7 @@
       >
         <div class="container">
           <div class="section-head reveal">
-            <span class="eyebrow">অর্ডার ফর্ম</span>
+            <span class="eyebrow">অর্ডার ফরম</span>
             <h2 id="orderTitle">আপনার অর্ডারের তথ্য দিন</h2>
           </div>
 
@@ -2535,6 +2629,58 @@
           </div>
         </div>
       </section>
+      <!-- ============ 7b. CONTACT (CALL + WHATSAPP) ============ -->
+      <section class="section" id="contact" aria-labelledby="contactTitle">
+        <div class="container narrow">
+          <div class="section-head reveal">
+            <span class="eyebrow">যোগাযোগ</span>
+            <h2 id="contactTitle">অর্ডার বা প্রশ্নে সরাসরি কথা বলুন</h2>
+          </div>
+          <div class="contact-box">
+            <div class="card contact-card reveal">
+              <span class="icon-bubble"
+                ><svg class="i" viewBox="0 0 24 24">
+                  <path
+                    d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.9.33 1.78.62 2.62a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.46-1.19a2 2 0 0 1 2.11-.45c.84.29 1.72.5 2.62.62A2 2 0 0 1 22 16.92z"
+                  /></svg
+              ></span>
+              <h3>কল করুন</h3>
+              <div class="contact-num" data-text="phoneDisplay">
+                +880 9643-330000
+              </div>
+              <a
+                href="tel:+8809643330000"
+                data-href="phoneHref"
+                class="btn btn-primary"
+                >এখনই কল করুন</a
+              >
+            </div>
+            <div class="card contact-card reveal" data-delay="100">
+              <span class="icon-bubble wa"
+                ><svg class="i" viewBox="0 0 24 24">
+                  <path
+                    d="M12.04 2c-5.46 0-9.9 4.44-9.9 9.9 0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.005c5.46 0 9.9-4.44 9.9-9.9 0-2.64-1.03-5.13-2.9-7-1.87-1.87-4.36-2.94-7-2.94zm0 18.13h-.005a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.19 8.19 0 0 1-1.26-4.37c0-4.54 3.7-8.23 8.24-8.23 2.2 0 4.27.86 5.83 2.42a8.17 8.17 0 0 1 2.41 5.82c0 4.54-3.7 8.22-8.24 8.22zm4.52-6.16c-.25-.12-1.47-.72-1.7-.81-.23-.08-.4-.12-.56.13-.17.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.12-1.06-.39-2.01-1.24-.75-.66-1.25-1.48-1.4-1.73-.14-.25-.02-.38.11-.51.11-.11.25-.29.37-.43.12-.15.16-.25.25-.42.08-.17.04-.31-.02-.43-.06-.12-.56-1.35-.77-1.85-.2-.48-.41-.42-.56-.42h-.48c-.17 0-.44.06-.67.31-.23.25-.87.85-.87 2.08s.89 2.41 1.02 2.58c.12.17 1.75 2.67 4.25 3.74.59.26 1.06.41 1.42.52.6.19 1.14.16 1.57.1.48-.07 1.47-.6 1.68-1.18.21-.58.21-1.08.15-1.18-.06-.1-.23-.16-.48-.28z"
+                  /></svg
+              ></span>
+              <h3>WhatsApp-এ মেসেজ করুন</h3>
+              <div class="contact-num" data-text="whatsappDisplay">
+                +880 1894-842442
+              </div>
+              <a
+                href="https://wa.me/8801894842442"
+                data-href="whatsappHref"
+                target="_blank"
+                rel="noopener"
+                class="btn btn-wa"
+                >WhatsApp-এ চ্যাট করুন</a
+              >
+            </div>
+          </div>
+          <p class="contact-time">
+            পণ্য সম্পর্কে জানতে বা অর্ডার করতে যেকোনো সময় যোগাযোগ করুন।
+          </p>
+        </div>
+      </section>
     </main>
 
     <!-- ============ 8. FOOTER ============ -->
@@ -2601,6 +2747,9 @@
               <a href="#safety" class="kp-hover">ব্যবহার ও সতর্কতা</a>
             </p>
             <p class="kp-mb">
+              <a href="#offer" class="kp-hover">বিশেষ অফার</a>
+            </p>
+            <p class="kp-mb">
               <a
                 href="https://www.prodhan.com/privacy-policy"
                 data-href="privacyUrl"
@@ -2620,6 +2769,36 @@
     </footer>
 
     <!-- Sticky bottom order button (mobile) -->
+    <!-- Floating round Call + WhatsApp buttons (side of page, sticky) -->
+    <div class="float-contact" aria-label="যোগাযোগ">
+      <a
+        href="tel:+8809643330000"
+        data-href="phoneHref"
+        class="fc-btn fc-call"
+        aria-label="কল করুন"
+      >
+        <svg class="i" viewBox="0 0 24 24">
+          <path
+            d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.9.33 1.78.62 2.62a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.46-1.19a2 2 0 0 1 2.11-.45c.84.29 1.72.5 2.62.62A2 2 0 0 1 22 16.92z"
+          />
+        </svg>
+      </a>
+      <a
+        href="https://wa.me/8801894842442"
+        data-href="whatsappHref"
+        target="_blank"
+        rel="noopener"
+        class="fc-btn fc-wa"
+        aria-label="WhatsApp-এ মেসেজ করুন"
+      >
+        <svg class="i" viewBox="0 0 24 24">
+          <path
+            d="M12.04 2c-5.46 0-9.9 4.44-9.9 9.9 0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.005c5.46 0 9.9-4.44 9.9-9.9 0-2.64-1.03-5.13-2.9-7-1.87-1.87-4.36-2.94-7-2.94zm0 18.13h-.005a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.19 8.19 0 0 1-1.26-4.37c0-4.54 3.7-8.23 8.24-8.23 2.2 0 4.27.86 5.83 2.42a8.17 8.17 0 0 1 2.41 5.82c0 4.54-3.7 8.22-8.24 8.22zm4.52-6.16c-.25-.12-1.47-.72-1.7-.81-.23-.08-.4-.12-.56.13-.17.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.12-1.06-.39-2.01-1.24-.75-.66-1.25-1.48-1.4-1.73-.14-.25-.02-.38.11-.51.11-.11.25-.29.37-.43.12-.15.16-.25.25-.42.08-.17.04-.31-.02-.43-.06-.12-.56-1.35-.77-1.85-.2-.48-.41-.42-.56-.42h-.48c-.17 0-.44.06-.67.31-.23.25-.87.85-.87 2.08s.89 2.41 1.02 2.58c.12.17 1.75 2.67 4.25 3.74.59.26 1.06.41 1.42.52.6.19 1.14.16 1.57.1.48-.07 1.47-.6 1.68-1.18.21-.58.21-1.08.15-1.18-.06-.1-.23-.16-.48-.28z"
+          />
+        </svg>
+      </a>
+    </div>
+
     <div class="sticky-cta" id="stickyCta">
       <div class="sticky-price">
         <s id="stickyOld">৳২,৫০০</s><strong id="stickyTotal">৳১,৬৯০</strong>
@@ -2679,6 +2858,9 @@
           privacyUrl: "https://www.prodhan.com/privacy-policy",
           phone: "+8809643330000",
           phoneDisplay: "+880 9643-330000",
+          // WhatsApp number (country code সহ, শুধু ডিজিট). আলাদা নম্বর হলে এখানে বদলান।
+          whatsapp: "8801894842442",
+          whatsappDisplay: "+880 1894-842442",
           year: 2026,
           sku: "HRM123",
           productName: "Handy Room Heater",
@@ -2737,6 +2919,15 @@
             siteUrl: CONFIG.siteUrl,
             privacyUrl: CONFIG.privacyUrl,
             phoneHref: "tel:" + CONFIG.phone.replace(/[^0-9+]/g, ""),
+            whatsappHref:
+              "https://wa.me/" +
+              CONFIG.whatsapp.replace(/\D/g, "") +
+              "?text=" +
+              encodeURIComponent(
+                "আসসালামু আলাইকুম, আমি " +
+                  CONFIG.productName +
+                  " সম্পর্কে জানতে চাই।",
+              ),
           };
           $$("[data-text]").forEach((el) => {
             const v = texts[el.dataset.text];
